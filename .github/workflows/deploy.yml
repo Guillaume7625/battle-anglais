@@ -19,13 +19,10 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global --add safe.directory /github/workspace
 
-      - name: Verify Git repository state
-        run: |
-          git status
-          git log -1
-
-      - name: Inject OpenAI API Key
-        run: echo "const API_KEY = '${{ secrets.OPENAI_API_KEY }}';" > ./api-key.js
+      - name: Create api-key.js
+        run: echo "const API_KEY = process.env.OPENAI_API_KEY;" > ./api-key.js
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
