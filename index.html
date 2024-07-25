@@ -93,6 +93,9 @@
         async function loadApiKey() {
             try {
                 const response = await fetch('./api-key.js');
+                if (!response.ok) {
+                    throw new Error('Erreur lors du chargement de la clé API');
+                }
                 const text = await response.text();
                 eval(text); // Ceci définira API_KEY
                 if (!API_KEY) {
@@ -271,10 +274,3 @@
     </script>
 </body>
 </html>
- 
- 
- 
- 
- 
- 
- 
