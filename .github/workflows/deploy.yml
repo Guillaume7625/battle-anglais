@@ -19,13 +19,19 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global --add safe.directory /github/workspace
 
+      - name: Verify Git repository state
+        run: |
+          git status
+          git log -1
+          git remote -v
+
       - name: Create api-key.js
         run: echo "const API_KEY = '${{ secrets.OPENAI_API_KEY }}';" > ./api-key.js
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
