@@ -20,7 +20,7 @@ jobs:
           git config --global --add safe.directory /github/workspace
 
       - name: Create api-key.js
-        run: echo "const API_KEY = process.env.OPENAI_API_KEY;" > ./api-key.js
+        run: echo "const API_KEY = '${{ secrets.OPENAI_API_KEY }}';" > ./api-key.js
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
@@ -29,4 +29,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
-
