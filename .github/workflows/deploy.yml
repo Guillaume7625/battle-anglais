@@ -1,12 +1,15 @@
 name: Deploy to GitHub Pages
+
 on:
   push:
     branches:
       - main
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 jobs:
   deploy:
     environment:
@@ -17,19 +20,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_ACCESS_TOKEN }} # Utilisation du token pour l'authentification
+          token: ${{ secrets.GH_TOKEN }}
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
       - name: Create api-key.js
         run: echo "const API_KEY = '${{ secrets.OPENAI_API_KEY }}';" > ./api-key.js
-      - name: Debug API Key
-        run: cat ./api-key.js # Étape de debug pour vérifier le contenu
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          token: ${{ secrets.GH_ACCESS_TOKEN }} # Utilisation du token pour l'authentification
