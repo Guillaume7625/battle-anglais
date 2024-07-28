@@ -98,8 +98,7 @@
                     throw new Error('Erreur lors du chargement de la clé API');
                 }
                 const text = await response.text();
-                const apiKeyScript = new Function(text);
-                apiKeyScript(); // Ceci définira API_KEY
+                eval(text); // Ceci définira API_KEY
                 if (!API_KEY) {
                     throw new Error('API_KEY non définie');
                 }
@@ -276,4 +275,3 @@
     </script>
 </body>
 </html>
-
